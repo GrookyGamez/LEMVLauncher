@@ -1,0 +1,27 @@
+1 ICON "icon.ico"
+1 24 "app.manifest"
+
+1 VERSIONINFO
+FILEVERSION     3,4,0,0
+PRODUCTVERSION  3,4,0,0
+FILEOS          0x40004L
+FILETYPE        0x1L
+BEGIN
+  BLOCK "StringFileInfo"
+  BEGIN
+    BLOCK "040904B0"
+    BEGIN
+      VALUE "CompanyName",      "GrookyGamez"
+      VALUE "FileDescription",  "LEMV Launcher - literally every Minecraft version"
+      VALUE "FileVersion",      "3.4.0.0"
+      VALUE "InternalName",     "LEMVLauncher"
+      VALUE "OriginalFilename", "LEMVLauncher.exe"
+      VALUE "ProductName",      "LEMV Launcher"
+      VALUE "ProductVersion",   "3.4.0.0"
+    END
+  END
+  BLOCK "VarFileInfo"
+  BEGIN
+    VALUE "Translation", 0x409, 0x4B0
+  END
+END

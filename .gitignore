@@ -1,0 +1,11 @@
+# build output
+LEMVLauncher.exe
+lemv-linux
+mockserver
+fakejava.exe
+fakejava-bin
+*.log
+
+# launcher data folder (created next to the exe at runtime)
+LEMV/
+shots/
