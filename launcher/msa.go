@@ -29,6 +29,12 @@ func xblBase() string   { return envOr("LEMV_XBL_URL", "https://user.auth.xboxli
 func xstsBase() string  { return envOr("LEMV_XSTS_URL", "https://xsts.auth.xboxlive.com") }
 func mcsvcBase() string { return envOr("LEMV_MCSVC_URL", "https://api.minecraftservices.com") }
 
+// msaEnabled gates Microsoft sign-in. The device-code flow isn't finished, so
+// its UI and CLI entry points are hidden rather than deleted — set this to true
+// to bring the whole feature back. Kept here, beside the code it controls, so
+// both the Windows UI and the cross-platform CLI can see it.
+const msaEnabled = false
+
 const msaScope = "XboxLive.signin offline_access"
 
 var msaHTTP = &http.Client{Timeout: 30 * time.Second}

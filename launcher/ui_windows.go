@@ -549,8 +549,10 @@ func (a *app) layout() layout {
 	l.setImpTgl = RECT{l.setImp.Right - s(46), l.setImp.Top + s(15), l.setImp.Right, l.setImp.Bottom - s(15)}
 	l.setRPC = row()
 	l.setRPCTgl = RECT{l.setRPC.Right - s(46), l.setRPC.Top + s(15), l.setRPC.Right, l.setRPC.Bottom - s(15)}
-	l.setAcc = row()
-	l.setAccBtn = RECT{l.setAcc.Right - s(140), l.setAcc.Top + s(10), l.setAcc.Right, l.setAcc.Bottom - s(10)}
+	if msaEnabled {
+		l.setAcc = row()
+		l.setAccBtn = RECT{l.setAcc.Right - s(140), l.setAcc.Top + s(10), l.setAcc.Right, l.setAcc.Bottom - s(10)}
+	}
 	l.setArgs = row()
 	l.setArgsBox = RECT{l.setArgs.Left, l.setArgs.Bottom - s(2), l.setArgs.Right, l.setArgs.Bottom + s(34)}
 
@@ -792,7 +794,7 @@ func (a *app) hitTest(x, y int) hit {
 			return hit{hitTglImport, 0}
 		case ptIn(l.setRPCTgl, x, y):
 			return hit{hitTglRPC, 0}
-		case ptIn(l.setAccBtn, x, y):
+		case msaEnabled && ptIn(l.setAccBtn, x, y):
 			return hit{hitAccount, 0}
 		}
 		return hit{hitNone, 0}
@@ -2126,14 +2128,16 @@ func (a *app) drawSettings(hdc uintptr, l layout) {
 	label(l.setRPC, "Discord Rich Presence", "Show your friends which version you're playing")
 	toggle(l.setRPCTgl, a.L.Settings.DiscordRPC, a.hover.kind == hitTglRPC)
 
-	accState := "Offline mode (no account)"
-	accBtn := "Sign in"
-	if acc := a.L.Settings.Account; acc != nil {
-		accState = "Signed in as " + acc.Name
-		accBtn = "Sign out"
+	if msaEnabled {
+		accState := "Offline mode (no account)"
+		accBtn := "Sign in"
+		if acc := a.L.Settings.Account; acc != nil {
+			accState = "Signed in as " + acc.Name
+			accBtn = "Sign out"
+		}
+		label(l.setAcc, "Minecraft account", accState)
+		a.drawButton(hdc, l.setAccBtn, accBtn, a.L.Settings.Account != nil, a.hover.kind == hitAccount, false, a.fonts.small)
 	}
-	label(l.setAcc, "Minecraft account", accState)
-	a.drawButton(hdc, l.setAccBtn, accBtn, a.L.Settings.Account != nil, a.hover.kind == hitAccount, false, a.fonts.small)
 
 	drawText(hdc, "Extra JVM arguments", RECT{l.setArgs.Left, l.setArgs.Top, l.setArgs.Right, l.setArgs.Top + a.sc(24)}, dtLeft|dtSingleLine|dtVCenter|dtNoPrefix, colText, a.fonts.body)
 	a.fillRound(hdc, l.setArgsBox, colField, a.sc(8))
@@ -2497,7 +2501,7 @@ func (a *app) drawMain(hdc uintptr, l layout) {
 					a.drawButton(hdc, br, "Download", false, a.hover.kind == hitGetJar && a.hover.index == i, false, a.fonts.small)
 					endX = br.Left - a.sc(10)
 				}
-				pill(endX, "DROP-IN ONLY", rgb(0x35, 0x37, 0x3d), colTextSoft)
+				pill(endX, "NOT ON MOJANG", rgb(0x35, 0x37, 0x3d), colTextSoft)
 				sub(endX, "needs "+e.JarName())
 			default:
 				pill(rp, "ON MOJANG", rgb(0x3e, 0x37, 0x22), colYellow)
@@ -2512,12 +2516,12 @@ func (a *app) drawMain(hdc uintptr, l layout) {
 				if br, ok := a.getJarButtonRect(l, i); ok {
 					// label the status to the left of the button, then draw the button
 					lbl := RECT{sr.Left, sr.Top, br.Left - a.sc(10), sr.Bottom}
-					a.shadowText(hdc, "DROP-IN ONLY", lbl, dtRight|dtSingleLine|dtVCenter, colTextDim, a.fonts.btn, 1)
+					a.shadowText(hdc, "NOT ON MOJANG", lbl, dtRight|dtSingleLine|dtVCenter, colTextDim, a.fonts.btn, 1)
 					flbl := RECT{fr.Left, fr.Top, br.Left - a.sc(10), fr.Bottom}
 					a.shadowText(hdc, "needs "+e.JarName(), flbl, dtRight|dtSingleLine|dtVCenter|dtEndEllipsis, colTextDim, a.fonts.monoSmall, 1)
 					a.drawButton(hdc, br, "Download", false, a.hover.kind == hitGetJar && a.hover.index == i, false, a.fonts.small)
 				} else {
-					a.shadowText(hdc, "DROP-IN ONLY", sr, dtRight|dtSingleLine|dtVCenter, colTextDim, a.fonts.btn, 1)
+					a.shadowText(hdc, "NOT ON MOJANG", sr, dtRight|dtSingleLine|dtVCenter, colTextDim, a.fonts.btn, 1)
 					a.shadowText(hdc, "needs your "+e.JarName(), fr, dtRight|dtSingleLine|dtVCenter|dtEndEllipsis, colTextDim, a.fonts.monoSmall, 1)
 				}
 			default:

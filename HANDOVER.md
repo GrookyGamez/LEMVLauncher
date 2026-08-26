@@ -1,4 +1,4 @@
-# LEMV Launcher — handover notes (v3.4.0)
+# LEMV Launcher — handover notes (v3.5.0)
 
 ## What this build is
 
@@ -205,6 +205,15 @@ manifest order is newest-first, which read backwards next to every other list.
 **Surprise Me is unchanged** — `rollTabs` still lists `TabRelease`, not
 `TabMinor`, so rolls stay on base versions. Add `TabMinor` there if point
 releases should be rollable.
+
+## v3.5.0
+
+- The **DROP-IN ONLY** badge is now **NOT ON MOJANG**.
+- **Microsoft sign-in is hidden**, not deleted. `msaEnabled` in `msa.go` gates
+  the Settings row, its hit-test, the settings layout row (otherwise Settings
+  shows a blank gap) and the `--signin` CLI flag. Set it to `true` to restore
+  the whole feature. The flag lives in `msa.go` rather than `ui_windows.go`
+  because the cross-platform CLI has to see it too.
 
 ## Building
 

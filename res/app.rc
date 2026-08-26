@@ -2,8 +2,8 @@
 1 24 "app.manifest"
 
 1 VERSIONINFO
-FILEVERSION     3,4,0,0
-PRODUCTVERSION  3,4,0,0
+FILEVERSION     3,5,0,0
+PRODUCTVERSION  3,5,0,0
 FILEOS          0x40004L
 FILETYPE        0x1L
 BEGIN
@@ -13,11 +13,11 @@ BEGIN
     BEGIN
       VALUE "CompanyName",      "GrookyGamez"
       VALUE "FileDescription",  "LEMV Launcher - literally every Minecraft version"
-      VALUE "FileVersion",      "3.4.0.0"
+      VALUE "FileVersion",      "3.5.0.0"
       VALUE "InternalName",     "LEMVLauncher"
       VALUE "OriginalFilename", "LEMVLauncher.exe"
       VALUE "ProductName",      "LEMV Launcher"
-      VALUE "ProductVersion",   "3.4.0.0"
+      VALUE "ProductVersion",   "3.5.0.0"
     END
   END
   BLOCK "VarFileInfo"

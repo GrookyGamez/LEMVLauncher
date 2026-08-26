@@ -19,7 +19,7 @@ import (
 
 const (
 	launcherName    = "LEMVLauncher"
-	launcherVersion = "3.4.0"
+	launcherVersion = "3.5.0"
 )
 
 // Launcher owns the folder layout next to the .exe.

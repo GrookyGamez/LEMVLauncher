@@ -40,6 +40,10 @@ func runCLI(L *Launcher, args []string) {
 		fmt.Fprintf(out, "\njars folder: %s\n", L.VersionsDir)
 		return
 	case "--signin":
+		if !msaEnabled {
+			fmt.Fprintln(out, "Microsoft sign-in isn't available in this build. Play offline by passing a username.")
+			return
+		}
 		cid := L.Settings.MSAClientID
 		if cid == "" {
 			cid = "test-client-id"
