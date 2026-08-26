@@ -25,8 +25,7 @@ executable.
 - **Portable.** Everything lives in one folder next to the exe — versions,
   worlds, assets, Java runtimes. Nothing touches `%APPDATA%`, nothing is
   installed, and moving the folder moves the whole setup.
-- **Offline or Microsoft sign-in.** Type a username and play, or sign in with a
-  Microsoft account via the device-code flow.
+- **Offline play.** Type a username and play. No account required.
 - **Per-version instances.** Each version gets its own worlds, options and
   screenshots, so a Beta 1.7.3 world can't collide with a 1.21 one.
 - **Drop-in jars.** Put a jar in `versions/` named after an official version id
@@ -37,7 +36,7 @@ executable.
 
 - **READY** — the jar is on disk; Play launches immediately.
 - **ON MOJANG** — no jar yet; Play fetches it automatically.
-- **DROP-IN ONLY** — nobody hosts a direct download; the launcher links to an
+- **NOT ON MOJANG** — nobody hosts a direct download; the launcher links to an
   archive page and picks the jar up once it lands in `versions/`.
 
 ## Building
@@ -82,7 +81,6 @@ debugging:
 ```sh
 LEMVLauncher.exe --list                 # print the catalog and which jars are present
 LEMVLauncher.exe --play <version> <name>  # launch a version headlessly
-LEMVLauncher.exe --signin               # Microsoft device-code sign-in
 ```
 
 ## Project layout
@@ -102,8 +100,7 @@ tab structure), `mojang.go` (manifest and version JSON resolution), `launch.go`
 ## Testing without Windows or internet
 
 `mock/` serves a complete fake Mojang: version manifest, version JSONs, client
-jars, libraries, assets and Java runtimes, plus a stand-in Microsoft sign-in
-chain and archive manifest. Combined with `fakejava/`, the whole download and
+jars, libraries, assets and Java runtimes, plus an archive manifest. Combined with `fakejava/`, the whole download and
 launch pipeline can be exercised on Linux.
 
 ```sh
@@ -137,7 +134,6 @@ Every remote endpoint can be redirected, which is what the test harness uses:
 | `LEMV_JRE_INDEX_URL`         | Mojang's Java runtime index                        |
 | `LEMV_LIBRARIES_URL`         | Mojang's library host                              |
 | `LEMV_RESOURCES_URL`         | Mojang's legacy resource host                      |
-| `LEMV_MSA_URL` / `LEMV_XBL_URL` / `LEMV_XSTS_URL` / `LEMV_MCSVC_URL` | the Microsoft sign-in chain |
 
 ## Credits
 
